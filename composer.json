@@ -1,0 +1,66 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "proovit/laravel-bot-filter",
+    "description": "Laravel 12 bot and probe registry package with event-driven detection, deduplication, classification, and notification hooks.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^12.0",
+        "illuminate/events": "^12.0",
+        "illuminate/notifications": "^12.0",
+        "illuminate/support": "^12.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^3.9.3",
+        "laravel/pint": "^1.29.0",
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^3.8",
+        "phpstan/phpstan": "^2.1.22"
+    },
+    "autoload": {
+        "psr-4": {
+            "Proovit\\BotFilter\\": "src/",
+            "Proovit\\BotFilter\\Database\\Factories\\": "database/factories/",
+            "Proovit\\BotFilter\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Proovit\\BotFilter\\BotFilterServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "format": [
+            "@php vendor/bin/pint src tests"
+        ],
+        "format:test": [
+            "@php vendor/bin/pint --test src tests"
+        ],
+        "analyse": [
+            "@php vendor/bin/phpstan analyse --ansi --memory-limit=1G"
+        ],
+        "qa": [
+            "@format:test",
+            "@analyse",
+            "@test"
+        ],
+        "test": [
+            "@php vendor/bin/pest"
+        ]
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}
