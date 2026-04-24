@@ -24,6 +24,13 @@ return [
         'enabled' => env('BOT_FILTER_CAPTURE_ENABLED', true),
         'exceptions' => env('BOT_FILTER_CAPTURE_EXCEPTIONS', true),
         'statuses' => [404, 405],
+        'ignore' => [
+            'paths' => [],
+            'hosts' => [],
+            'panels' => [],
+            'methods' => [],
+            'exception_classes' => [],
+        ],
     ],
 
     'probes' => [

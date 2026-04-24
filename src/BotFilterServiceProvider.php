@@ -6,10 +6,12 @@ namespace Proovit\BotFilter;
 
 use Illuminate\Support\ServiceProvider;
 use Proovit\BotFilter\Contracts\BotProbeClassifierInterface;
+use Proovit\BotFilter\Contracts\BotProbeCapturePolicyInterface;
 use Proovit\BotFilter\Contracts\BotProbeFingerprintResolverInterface;
 use Proovit\BotFilter\Contracts\BotProbeNotifierInterface;
 use Proovit\BotFilter\Contracts\BotProbeRepositoryInterface;
 use Proovit\BotFilter\Support\BotProbeCatalog;
+use Proovit\BotFilter\Support\DefaultBotProbeCapturePolicy;
 use Proovit\BotFilter\Support\DefaultBotProbeClassifier;
 use Proovit\BotFilter\Support\DefaultBotProbeFingerprintResolver;
 use Proovit\BotFilter\Support\DefaultBotProbeNotifier;
@@ -28,6 +30,7 @@ final class BotFilterServiceProvider extends ServiceProvider
 
         $this->app->singleton(BotProbeFingerprintResolverInterface::class, DefaultBotProbeFingerprintResolver::class);
         $this->app->singleton(BotProbeClassifierInterface::class, DefaultBotProbeClassifier::class);
+        $this->app->singleton(BotProbeCapturePolicyInterface::class, DefaultBotProbeCapturePolicy::class);
         $this->app->singleton(BotProbeRepositoryInterface::class, DefaultBotProbeRepository::class);
         $this->app->singleton(BotProbeNotifierInterface::class, DefaultBotProbeNotifier::class);
         $this->app->singleton(BotFilter::class);

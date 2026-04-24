@@ -31,3 +31,15 @@ That is what records:
 - thrown exceptions that you want to classify as incidents
 
 If you only append it to the `web` group, it may miss true missing-route probes. Global registration is recommended.
+
+### Optional capture tuning
+
+After publishing `config/bot-filter.php`, you can fine tune capture with ignore lists:
+
+- paths: `phpinfo`, `settings.ini`, `wp-login.php`
+- hosts: any hostname you want to exclude
+- panels: `admin`, `manager`, `b2b`
+- methods: `OPTIONS`, `HEAD`
+- exception classes: any throwable class you want to ignore
+
+Ignored probes do not create records, but they can still emit `Proovit\BotFilter\Events\BotProbeIgnored` so you can plug your own logging or notification listener.
