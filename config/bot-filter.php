@@ -20,6 +20,12 @@ return [
         'track_request_payload' => env('BOT_FILTER_TRACK_PAYLOAD', true),
     ],
 
+    'capture' => [
+        'enabled' => env('BOT_FILTER_CAPTURE_ENABLED', true),
+        'exceptions' => env('BOT_FILTER_CAPTURE_EXCEPTIONS', true),
+        'statuses' => [404, 405],
+    ],
+
     'probes' => [
         [
             'key' => 'robots-txt',

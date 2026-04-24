@@ -9,6 +9,7 @@ Laravel 12 core package for recording, classifying, and deduplicating bot and pr
 - emits events when a probe is recorded or reclassified
 - sends a first-alert notification once, then only increments the counter
 - exposes a fluent API for request and exception observation
+- ships a request capture middleware, but you must register it in your application bootstrap
 
 ## Install
 
@@ -23,4 +24,3 @@ composer require proovit/laravel-bot-filter
 - [Probe catalog](docs/probes.md)
 - [Events](docs/events.md)
 - [Release notes](docs/release-notes.md)
-
