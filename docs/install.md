@@ -52,6 +52,8 @@ The core package notification is controlled by the runtime settings row:
 
 - `notifications_enabled`: master switch
 - `notification_mode`: `default` or `custom`
+- `notification_title`: optional subject for the package notification
+- `notification_intro`: optional intro copy displayed before the bot details
 - `custom_notification_class`: optional application notification class to use when `notification_mode` is `custom`
 
-If the custom class cannot be resolved, the package falls back to its built-in notification.
+If the custom class cannot be resolved, the package falls back to its built-in notification. When the built-in notification is used, the title and intro copy from the runtime settings are applied before the bot probe details.

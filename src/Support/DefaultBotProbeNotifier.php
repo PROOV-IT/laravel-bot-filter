@@ -27,13 +27,19 @@ final class DefaultBotProbeNotifier implements BotProbeNotifierInterface
             ?: (string) $settings->notification_mail
             ?: (string) config('app.admin_email', 'contact@proov-it.io');
 
-        $notification = $this->resolveNotification($probe, (string) $settings->notification_mode, $settings->custom_notification_class);
+        $notification = $this->resolveNotification(
+            $probe,
+            (string) $settings->notification_mode,
+            $settings->custom_notification_class,
+            filled($settings->notification_title ?? null) ? (string) $settings->notification_title : null,
+            filled($settings->notification_intro ?? null) ? (string) $settings->notification_intro : null,
+        );
 
         Notification::route('mail', $target)
             ->notify($notification);
     }
 
-    private function resolveNotification(BotProbe $probe, string $mode, ?string $customClass): LaravelNotification
+    private function resolveNotification(BotProbe $probe, string $mode, ?string $customClass, ?string $title, ?string $intro): LaravelNotification
     {
         if ($mode === 'custom' && is_string($customClass) && class_exists($customClass)) {
             try {
@@ -47,6 +53,6 @@ final class DefaultBotProbeNotifier implements BotProbeNotifierInterface
             }
         }
 
-        return new BotProbeDetectedNotification($probe);
+        return new BotProbeDetectedNotification($probe, $title, $intro);
     }
 }

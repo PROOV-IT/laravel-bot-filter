@@ -16,6 +16,8 @@ return [
     'notification' => [
         'enabled' => env('BOT_FILTER_NOTIFY_ENABLED', true),
         'mode' => env('BOT_FILTER_NOTIFY_MODE', 'default'),
+        'title' => env('BOT_FILTER_NOTIFY_TITLE', null),
+        'intro' => env('BOT_FILTER_NOTIFY_INTRO', null),
         'mail' => env('BOT_FILTER_NOTIFY_MAIL', env('APP_ADMIN_EMAIL', 'contact@proov-it.io')),
         'route' => env('BOT_FILTER_NOTIFY_ROUTE', null),
         'custom_notification_class' => env('BOT_FILTER_CUSTOM_NOTIFICATION_CLASS', null),

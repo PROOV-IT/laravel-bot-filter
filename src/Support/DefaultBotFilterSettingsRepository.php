@@ -61,6 +61,8 @@ final class DefaultBotFilterSettingsRepository implements BotFilterSettingsRepos
             'ignore_exception_classes' => array_values((array) config('bot-filter.capture.ignore.exception_classes', [])),
             'notifications_enabled' => (bool) config('bot-filter.notification.enabled', true),
             'notification_mode' => (string) config('bot-filter.notification.mode', 'default'),
+            'notification_title' => filled(config('bot-filter.notification.title')) ? (string) config('bot-filter.notification.title') : null,
+            'notification_intro' => filled(config('bot-filter.notification.intro')) ? (string) config('bot-filter.notification.intro') : null,
             'notification_mail' => (string) config('bot-filter.notification.mail', config('app.admin_email', 'contact@proov-it.io')),
             'notification_route' => config('bot-filter.notification.route'),
             'custom_notification_class' => config('bot-filter.notification.custom_notification_class'),

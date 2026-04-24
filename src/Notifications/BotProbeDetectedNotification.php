@@ -13,7 +13,11 @@ final class BotProbeDetectedNotification extends Notification
 {
     use Queueable;
 
-    public function __construct(public readonly BotProbe $probe) {}
+    public function __construct(
+        public readonly BotProbe $probe,
+        public readonly ?string $title = null,
+        public readonly ?string $intro = null,
+    ) {}
 
     public function via(object $notifiable): array
     {
@@ -23,9 +27,19 @@ final class BotProbeDetectedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         $path = (string) ($this->probe->normalized_path ?? $this->probe->path);
+        $introLines = array_values(array_filter(array_map(
+            static fn (string $line): string => trim($line),
+            preg_split('/\R+/', (string) $this->intro) ?: [],
+        )));
 
-        return (new MailMessage)
-            ->subject(__('laravel-bot-filter::laravel-bot-filter.notifications.bot_probe_detected.subject', ['path' => $path]))
+        $message = (new MailMessage)
+            ->subject($this->title ?: __('laravel-bot-filter::laravel-bot-filter.notifications.bot_probe_detected.subject', ['path' => $path]));
+
+        foreach ($introLines as $introLine) {
+            $message->line($introLine);
+        }
+
+        return $message
             ->line(__('laravel-bot-filter::laravel-bot-filter.notifications.bot_probe_detected.title'))
             ->line(__('laravel-bot-filter::laravel-bot-filter.notifications.bot_probe_detected.path', ['path' => $this->probe->path]))
             ->line(__('laravel-bot-filter::laravel-bot-filter.notifications.bot_probe_detected.host', ['host' => (string) $this->probe->host]))

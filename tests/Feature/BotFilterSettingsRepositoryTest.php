@@ -18,6 +18,8 @@ it('resets bot filter settings to defaults', function (): void {
         'ignore_exception_classes' => [RuntimeException::class],
         'notifications_enabled' => false,
         'notification_mode' => 'custom',
+        'notification_title' => 'Custom title',
+        'notification_intro' => "Line 1\nLine 2",
         'notification_mail' => 'ops@example.com',
         'notification_route' => 'route@example.com',
         'custom_notification_class' => 'App\\Notifications\\Custom',
@@ -36,6 +38,8 @@ it('resets bot filter settings to defaults', function (): void {
         ->and($settings->ignore_exception_classes)->toBe([])
         ->and($settings->notifications_enabled)->toBeTrue()
         ->and($settings->notification_mode)->toBe('default')
+        ->and($settings->notification_title)->toBeNull()
+        ->and($settings->notification_intro)->toBeNull()
         ->and($settings->notification_mail)->toBe('contact@proov-it.io')
         ->and($settings->custom_notification_class)->toBeNull()
         ->and($settings->show_widgets)->toBeTrue();

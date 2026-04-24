@@ -9,6 +9,8 @@ Important keys:
 - `database.connection`: optional dedicated connection
 - `settings.table`: runtime settings table name
 - `notification.mode`: default or custom notification strategy
+- `notification.title`: optional subject used by the package notification
+- `notification.intro`: optional intro copy displayed before the probe details in the package notification
 - `notification.mail`: first-alert recipient
 - `notification.custom_notification_class`: optional application notification class used in custom mode
 - `probes`: normalized probe catalog
