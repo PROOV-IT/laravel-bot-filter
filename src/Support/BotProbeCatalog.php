@@ -5,16 +5,13 @@ declare(strict_types=1);
 namespace Proovit\BotFilter\Support;
 
 use Illuminate\Support\Collection;
-use Proovit\BotFilter\Enums\BotProbeClassification;
 
 final class BotProbeCatalog
 {
     /**
-     * @param array<int, BotProbeDefinition> $definitions
+     * @param  array<int, BotProbeDefinition>  $definitions
      */
-    public function __construct(private array $definitions = [])
-    {
-    }
+    public function __construct(private array $definitions = []) {}
 
     public static function fromConfig(array $definitions): self
     {

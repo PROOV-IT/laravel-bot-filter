@@ -45,7 +45,7 @@
             "@php vendor/bin/pint --test src tests"
         ],
         "analyse": [
-            "@php vendor/bin/phpstan analyse --ansi --memory-limit=1G"
+            "@php vendor/bin/phpstan analyse src tests --ansi --memory-limit=1G"
         ],
         "qa": [
             "@format:test",

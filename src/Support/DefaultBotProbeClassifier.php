@@ -8,9 +8,7 @@ use Proovit\BotFilter\Contracts\BotProbeClassifierInterface;
 
 final class DefaultBotProbeClassifier implements BotProbeClassifierInterface
 {
-    public function __construct(private readonly BotProbeCatalog $catalog)
-    {
-    }
+    public function __construct(private readonly BotProbeCatalog $catalog) {}
 
     public function match(string $normalizedPath): ?BotProbeDefinition
     {

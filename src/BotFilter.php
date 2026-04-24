@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Proovit\BotFilter;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Proovit\BotFilter\Contracts\BotProbeClassifierInterface;
 use Proovit\BotFilter\Contracts\BotProbeNotifierInterface;
 use Proovit\BotFilter\Contracts\BotProbeRepositoryInterface;
 use Proovit\BotFilter\Enums\BotProbeClassification;
 use Proovit\BotFilter\Enums\BotProbeStatus;
+use Proovit\BotFilter\Events\BotProbeClassified;
 use Proovit\BotFilter\Events\BotProbeRecorded;
 use Proovit\BotFilter\Models\BotProbe;
 use Proovit\BotFilter\Support\BotProbeObservation;
@@ -22,8 +22,7 @@ final class BotFilter
         private readonly BotProbeRepositoryInterface $repository,
         private readonly BotProbeClassifierInterface $classifier,
         private readonly BotProbeNotifierInterface $notifier,
-    ) {
-    }
+    ) {}
 
     public function observe(Request $request, ?Throwable $throwable = null, array $meta = []): BotProbe
     {
@@ -53,7 +52,7 @@ final class BotFilter
         $probe->status = BotProbeStatus::Reviewed;
         $probe->save();
 
-        event(new \Proovit\BotFilter\Events\BotProbeClassified($probe));
+        event(new BotProbeClassified($probe));
 
         return $probe;
     }

@@ -7,6 +7,8 @@ php artisan vendor:publish --tag=bot-filter-migrations
 php artisan migrate
 ```
 
+The migrations create both the probe registry table and the bot filter settings table used by the Filament settings page.
+
 ## Activate capture
 
 The package is passive until you register its middleware.
@@ -43,3 +45,13 @@ After publishing `config/bot-filter.php`, you can fine tune capture with ignore 
 - exception classes: any throwable class you want to ignore
 
 Ignored probes do not create records, but they can still emit `Proovit\BotFilter\Events\BotProbeIgnored` so you can plug your own logging or notification listener.
+
+### Notification modes
+
+The core package notification is controlled by the runtime settings row:
+
+- `notifications_enabled`: master switch
+- `notification_mode`: `default` or `custom`
+- `custom_notification_class`: optional application notification class to use when `notification_mode` is `custom`
+
+If the custom class cannot be resolved, the package falls back to its built-in notification.

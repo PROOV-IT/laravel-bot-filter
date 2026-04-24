@@ -8,7 +8,5 @@ use Proovit\BotFilter\Models\BotProbe;
 
 final class BotProbeClassified
 {
-    public function __construct(public readonly BotProbe $probe)
-    {
-    }
+    public function __construct(public readonly BotProbe $probe) {}
 }

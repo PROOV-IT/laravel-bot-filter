@@ -8,7 +8,5 @@ use Proovit\BotFilter\Support\BotProbeObservation;
 
 final class BotProbeRecorded
 {
-    public function __construct(public readonly BotProbeObservation $observation)
-    {
-    }
+    public function __construct(public readonly BotProbeObservation $observation) {}
 }

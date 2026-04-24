@@ -15,8 +15,7 @@ final class DefaultBotProbeRepository implements BotProbeRepositoryInterface
 {
     public function __construct(
         private readonly BotProbeFingerprintResolverInterface $fingerprintResolver,
-    ) {
-    }
+    ) {}
 
     public function record(array $context, ?BotProbeDefinition $definition = null): BotProbeObservation
     {
@@ -33,7 +32,7 @@ final class DefaultBotProbeRepository implements BotProbeRepositoryInterface
                 $created = false;
 
                 if (! $probe) {
-                    $probe = new BotProbe();
+                    $probe = new BotProbe;
                     $probe->fingerprint = $context['fingerprint'];
                     $probe->count = 0;
                     $probe->first_seen_at = now();

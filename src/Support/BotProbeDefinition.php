@@ -9,7 +9,7 @@ use Proovit\BotFilter\Enums\BotProbeClassification;
 final class BotProbeDefinition
 {
     /**
-     * @param array<int, string> $match
+     * @param  array<int, string>  $match
      */
     public function __construct(
         public readonly string $key,
@@ -18,8 +18,7 @@ final class BotProbeDefinition
         public readonly BotProbeClassification $suggestedClassification = BotProbeClassification::Bot,
         public readonly bool $enabled = true,
         public readonly bool $notify = false,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $definition): self
     {

@@ -13,9 +13,7 @@ final class BotProbeDetectedNotification extends Notification
 {
     use Queueable;
 
-    public function __construct(public readonly BotProbe $probe)
-    {
-    }
+    public function __construct(public readonly BotProbe $probe) {}
 
     public function via(object $notifiable): array
     {

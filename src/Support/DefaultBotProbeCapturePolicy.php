@@ -6,15 +6,20 @@ namespace Proovit\BotFilter\Support;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Proovit\BotFilter\Contracts\BotFilterSettingsRepositoryInterface;
 use Proovit\BotFilter\Contracts\BotProbeCapturePolicyInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 final class DefaultBotProbeCapturePolicy implements BotProbeCapturePolicyInterface
 {
+    public function __construct(private readonly BotFilterSettingsRepositoryInterface $settings) {}
+
     public function shouldCapture(Request $request, ?Throwable $throwable = null, ?Response $response = null): bool
     {
-        if (! (bool) config('bot-filter.enabled', true) || ! (bool) config('bot-filter.capture.enabled', true)) {
+        $settings = $this->settings->settings();
+
+        if (! (bool) config('bot-filter.enabled', true) || ! (bool) $settings->capture_enabled) {
             return false;
         }
 
@@ -39,11 +44,19 @@ final class DefaultBotProbeCapturePolicy implements BotProbeCapturePolicyInterfa
 
     public function ignoreReason(Request $request, ?Throwable $throwable = null, ?Response $response = null): ?string
     {
-        if (! (bool) config('bot-filter.enabled', true) || ! (bool) config('bot-filter.capture.enabled', true)) {
+        $settings = $this->settings->settings();
+
+        if (! (bool) config('bot-filter.enabled', true) || ! (bool) $settings->capture_enabled) {
             return 'capture_disabled';
         }
 
-        $ignore = (array) config('bot-filter.capture.ignore', []);
+        $ignore = [
+            'paths' => (array) $settings->ignore_paths,
+            'hosts' => (array) $settings->ignore_hosts,
+            'panels' => (array) $settings->ignore_panels,
+            'methods' => (array) $settings->ignore_methods,
+            'exception_classes' => (array) $settings->ignore_exception_classes,
+        ];
         $normalizedPath = $this->normalizePath($request->path());
         $host = strtolower(trim($request->getHost()));
         $panel = $this->guessPanel($request->path());
@@ -70,15 +83,12 @@ final class DefaultBotProbeCapturePolicy implements BotProbeCapturePolicyInterfa
             return 'ignored_exception_class';
         }
 
-        if ($throwable !== null && ! (bool) config('bot-filter.capture.exceptions', true)) {
+        if ($throwable !== null && ! (bool) $settings->capture_exceptions) {
             return 'exception_capture_disabled';
         }
 
         if ($throwable === null && $response !== null) {
-            $statuses = array_map(
-                static fn ($value): int => (int) $value,
-                (array) config('bot-filter.capture.statuses', [404, 405])
-            );
+            $statuses = array_map(static fn ($value): int => (int) $value, (array) $settings->capture_statuses);
 
             if (! in_array((int) $response->getStatusCode(), $statuses, true)) {
                 return 'status_not_listed';

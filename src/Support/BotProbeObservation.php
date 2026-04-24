@@ -12,8 +12,7 @@ final class BotProbeObservation
         public readonly BotProbe $probe,
         public readonly bool $created,
         public readonly ?BotProbeDefinition $definition = null,
-    ) {
-    }
+    ) {}
 
     public function isFirstSeen(): bool
     {

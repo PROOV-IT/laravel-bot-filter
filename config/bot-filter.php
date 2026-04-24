@@ -8,10 +8,17 @@ return [
         'table' => env('BOT_FILTER_TABLE', 'bot_probes'),
     ],
 
+    'settings' => [
+        'connection' => env('BOT_FILTER_SETTINGS_DB_CONNECTION'),
+        'table' => env('BOT_FILTER_SETTINGS_TABLE', 'bot_filter_settings'),
+    ],
+
     'notification' => [
         'enabled' => env('BOT_FILTER_NOTIFY_ENABLED', true),
+        'mode' => env('BOT_FILTER_NOTIFY_MODE', 'default'),
         'mail' => env('BOT_FILTER_NOTIFY_MAIL', env('APP_ADMIN_EMAIL', 'contact@proov-it.io')),
         'route' => env('BOT_FILTER_NOTIFY_ROUTE', null),
+        'custom_notification_class' => env('BOT_FILTER_CUSTOM_NOTIFICATION_CLASS', null),
     ],
 
     'defaults' => [

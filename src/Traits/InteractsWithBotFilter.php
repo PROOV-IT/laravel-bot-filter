@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Proovit\BotFilter\Traits;
 
 use Illuminate\Http\Request;
-use Throwable;
 use Proovit\BotFilter\BotFilter;
 use Proovit\BotFilter\Models\BotProbe;
+use Throwable;
 
 trait InteractsWithBotFilter
 {

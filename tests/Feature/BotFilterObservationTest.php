@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Notification;
 use Proovit\BotFilter\BotFilter;
-use Proovit\BotFilter\Notifications\BotProbeDetectedNotification;
 use Proovit\BotFilter\Enums\BotProbeStatus;
 use Proovit\BotFilter\Models\BotProbe;
+use Proovit\BotFilter\Notifications\BotProbeDetectedNotification;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 it('records a probe once and notifies only on first sight', function (): void {
     Notification::fake();
@@ -14,7 +15,7 @@ it('records a probe once and notifies only on first sight', function (): void {
     $botFilter = app(BotFilter::class);
 
     $context = [
-        'exception_class' => Symfony\Component\Routing\Exception\RouteNotFoundException::class,
+        'exception_class' => RouteNotFoundException::class,
         'method' => 'GET',
         'host' => 'api.proov-it.online',
         'path' => '/robots.txt',

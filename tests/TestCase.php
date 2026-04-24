@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 use Proovit\BotFilter\BotFilterServiceProvider;

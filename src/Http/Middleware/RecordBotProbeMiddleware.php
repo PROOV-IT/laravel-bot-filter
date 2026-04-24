@@ -6,8 +6,8 @@ namespace Proovit\BotFilter\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Proovit\BotFilter\Contracts\BotProbeCapturePolicyInterface;
 use Proovit\BotFilter\BotFilter;
+use Proovit\BotFilter\Contracts\BotProbeCapturePolicyInterface;
 use Proovit\BotFilter\Events\BotProbeIgnored;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
@@ -17,9 +17,7 @@ final class RecordBotProbeMiddleware
     public function __construct(
         private readonly BotFilter $botFilter,
         private readonly BotProbeCapturePolicyInterface $capturePolicy,
-    )
-    {
-    }
+    ) {}
 
     public function handle(Request $request, Closure $next): Response
     {

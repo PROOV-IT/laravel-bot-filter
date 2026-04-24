@@ -7,7 +7,10 @@ Important keys:
 - `enabled`: master switch
 - `database.table`: incident table name
 - `database.connection`: optional dedicated connection
+- `settings.table`: runtime settings table name
+- `notification.mode`: default or custom notification strategy
 - `notification.mail`: first-alert recipient
+- `notification.custom_notification_class`: optional application notification class used in custom mode
 - `probes`: normalized probe catalog
 
 Capture settings:
@@ -26,3 +29,5 @@ Recommended integration:
 - register `Proovit\BotFilter\Http\Middleware\RecordBotProbeMiddleware` globally in `bootstrap/app.php`
 - keep the package enabled, but control what is captured with the config flags above
 - listen to `Proovit\BotFilter\Events\BotProbeIgnored` if you want to log filtered probes or feed a review queue
+
+Runtime settings are stored in the `bot_filter_settings` table by default and can be managed from the Filament plugin settings page.
