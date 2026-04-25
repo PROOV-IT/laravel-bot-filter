@@ -10,9 +10,9 @@ return new class extends Migration
     {
         $tableName = config('url-watcher.database.events_table', 'url_watch_events');
 
-        if (Schema::hasTable($tableName)) {
-            return;
-        }
+        // if (Schema::hasTable($tableName)) {
+        //     return;
+        // }
 
         Schema::create($tableName, function (Blueprint $table): void {
             $table->uuid('id')->primary();

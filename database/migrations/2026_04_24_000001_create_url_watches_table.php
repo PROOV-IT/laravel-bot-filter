@@ -10,9 +10,9 @@ return new class extends Migration
     {
         $tableName = config('url-watcher.database.table', 'url_watches');
 
-        if (Schema::hasTable($tableName) || Schema::hasTable('bot_probes')) {
-            return;
-        }
+        // if (Schema::hasTable($tableName) || Schema::hasTable('bot_probes')) {
+        //     return;
+        // }
 
         Schema::create($tableName, function (Blueprint $table): void {
             $table->uuid('id')->primary();

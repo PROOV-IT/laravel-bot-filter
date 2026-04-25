@@ -10,9 +10,9 @@ return new class extends Migration
     {
         $tableName = config('url-watcher.settings.table', 'url_watcher_settings');
 
-        if (Schema::hasTable($tableName) || Schema::hasTable('bot_filter_settings')) {
-            return;
-        }
+        // if (Schema::hasTable($tableName) || Schema::hasTable('bot_filter_settings')) {
+        //     return;
+        // }
 
         Schema::create($tableName, function (Blueprint $table): void {
             $table->id();
