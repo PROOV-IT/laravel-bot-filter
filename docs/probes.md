@@ -1,12 +1,11 @@
-# Probe catalog
+# URL definition catalog
 
-The default catalog ships with common probe families:
+The default catalog ships with common URL watch families:
 
 - `robots.txt`
 - `favicon.ico`
-- PHP discovery probes
-- WordPress probes
-- settings / env probes
+- PHP discovery incidents
+- WordPress incidents
+- settings / env incidents
 
 Each definition can be enabled, disabled, or replaced in the host application config.
-

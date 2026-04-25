@@ -1,17 +1,18 @@
-# proovit/laravel-bot-filter
+# proovit/laravel-url-watcher
 
-Laravel 12 core package for recording, classifying, and deduplicating bot and probe incidents.
+Laravel 12 core package for recording, classifying, and deduplicating problematic URL incidents.
 
 ## What it does
 
-- stores route scan and bot probe incidents in a normalized table
-- stores runtime bot filter settings in a dedicated table
-- deduplicates repeated probes with a stable fingerprint
-- emits events when a probe is recorded or reclassified
-- emits an ignored event when a known probe is intentionally filtered out
+- stores aggregated URL watches in a normalized table
+- stores detailed URL watch events in a dedicated history table
+- stores runtime URL watcher settings in a dedicated table
+- deduplicates repeated incidents with a stable fingerprint
+- emits events when a URL watch is recorded or reclassified
+- emits an ignored event when a known incident is intentionally filtered out
 - sends a first-alert notification once, then only increments the counter
 - supports context-aware rulesets for environment, host, and panel overrides
-- ships with a digest notification command for scheduled probe summaries
+- ships with a digest notification command for scheduled URL watch summaries
 - lets you customize the default notification subject and intro copy
 - exposes a fluent API for request and exception observation
 - ships a request capture middleware, but you must register it in your application bootstrap
@@ -20,13 +21,13 @@ Laravel 12 core package for recording, classifying, and deduplicating bot and pr
 ## Install
 
 ```bash
-composer require proovit/laravel-bot-filter
+composer require proovit/laravel-url-watcher
 ```
 
 ## Documentation
 
 - [Install](docs/install.md)
 - [Configuration](docs/configuration.md)
-- [Probe catalog](docs/probes.md)
+- [Definition catalog](docs/probes.md)
 - [Events](docs/events.md)
 - [Release notes](docs/release-notes.md)

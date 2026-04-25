@@ -6,7 +6,7 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as BaseTestCase;
-use Proovit\BotFilter\BotFilterServiceProvider;
+use Proovit\UrlWatcher\UrlWatcherServiceProvider;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,14 +15,14 @@ abstract class TestCase extends BaseTestCase
     protected function getPackageProviders($app): array
     {
         return [
-            BotFilterServiceProvider::class,
+            UrlWatcherServiceProvider::class,
         ];
     }
 
     protected function defineEnvironment($app): void
     {
         $app['config']->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
-        $app['config']->set('bot-filter.notification.mail', 'contact@proov-it.io');
+        $app['config']->set('url-watcher.notification.mail', 'contact@proov-it.io');
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [
             'driver' => 'sqlite',

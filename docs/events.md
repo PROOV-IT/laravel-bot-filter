@@ -2,9 +2,9 @@
 
 The core package emits:
 
-- `Proovit\BotFilter\Events\BotProbeRecorded`
-- `Proovit\BotFilter\Events\BotProbeClassified`
-- `Proovit\BotFilter\Events\BotProbeNotificationSent`
-- `Proovit\BotFilter\Events\BotProbeIgnored`
+- `Proovit\UrlWatcher\Events\UrlWatchRecorded`
+- `Proovit\UrlWatcher\Events\UrlWatchClassified`
+- `Proovit\UrlWatcher\Events\UrlWatchNotificationSent`
+- `Proovit\UrlWatcher\Events\UrlWatchIgnored`
 
 Use them to plug custom listeners, alerts, IP blocklists, or external SIEM integrations.

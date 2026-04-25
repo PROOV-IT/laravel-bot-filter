@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use Proovit\BotFilter\BotFilter;
-use Proovit\BotFilter\BotFilterServiceProvider;
-use Proovit\BotFilter\Support\BotProbeCatalog;
+use Proovit\UrlWatcher\Support\UrlWatchCatalog;
+use Proovit\UrlWatcher\UrlWatcher;
+use Proovit\UrlWatcher\UrlWatcherServiceProvider;
 
-it('registers the bot filter package', function (): void {
-    expect(app(BotFilter::class))->toBeInstanceOf(BotFilter::class);
-    expect(app(BotProbeCatalog::class))->toBeInstanceOf(BotProbeCatalog::class);
-    expect(BotFilterServiceProvider::class)->toBeString();
+it('registers the URL watcher package', function (): void {
+    expect(app(UrlWatcher::class))->toBeInstanceOf(UrlWatcher::class);
+    expect(app(UrlWatchCatalog::class))->toBeInstanceOf(UrlWatchCatalog::class);
+    expect(UrlWatcherServiceProvider::class)->toBeString();
 });

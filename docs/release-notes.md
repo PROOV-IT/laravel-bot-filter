@@ -3,7 +3,7 @@
 ## 0.1.0
 
 - initial core scaffolding
-- normalized probe catalog
+- normalized URL definition catalog
 - event-driven repository and notification flow
 
 ## 0.2.0

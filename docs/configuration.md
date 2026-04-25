@@ -1,6 +1,6 @@
 # Configuration
 
-The package is configured through `config/bot-filter.php`.
+The package is configured through `config/url-watcher.php`.
 
 Important keys:
 
@@ -10,7 +10,7 @@ Important keys:
 - `settings.table`: runtime settings table name
 - `notification.mode`: default or custom notification strategy
 - `notification.title`: optional subject used by the package notification
-- `notification.intro`: optional intro copy displayed before the probe details in the package notification
+- `notification.intro`: optional intro copy displayed before the incident details in the package notification
 - `notification.mail`: first-alert recipient
 - `notification.custom_notification_class`: optional application notification class used in custom mode
 - `rulesets`: optional context-aware overrides for environment, host, and panel
@@ -19,8 +19,12 @@ Important keys:
 - `digest.title`: custom digest subject
 - `digest.intro`: intro copy displayed before the digest summary
 - `digest.window_hours`: digest lookback window
-- `digest.notify_when_empty`: send an empty digest when the window has no probes
-- `probes`: normalized probe catalog
+- `digest.notify_when_empty`: send an empty digest when the window has no incidents
+- `definitions`: normalized URL definition catalog
+- `history.enabled`: enable detailed event history storage
+- `history.store_user_agent`: keep the user agent on event rows
+- `history.store_query_string`: keep the query string on event rows
+- `history.store_referer`: keep the referer on event rows
 
 Capture settings:
 
@@ -35,11 +39,11 @@ Capture settings:
 
 Recommended integration:
 
-- register `Proovit\BotFilter\Http\Middleware\RecordBotProbeMiddleware` globally in `bootstrap/app.php`
+- register `Proovit\UrlWatcher\Http\Middleware\RecordUrlWatchMiddleware` globally in `bootstrap/app.php`
 - keep the package enabled, but control what is captured with the config flags above
-- listen to `Proovit\BotFilter\Events\BotProbeIgnored` if you want to log filtered probes or feed a review queue
+- listen to `Proovit\UrlWatcher\Events\UrlWatchIgnored` if you want to log filtered incidents or feed a review queue
 
-Runtime settings are stored in the `bot_filter_settings` table by default and can be managed from the Filament plugin settings page.
+Runtime settings are stored in the `url_watcher_settings` table by default and can be managed from the Filament plugin settings page. Detailed request history is stored in `url_watch_events`.
 
 ### Rulesets
 
