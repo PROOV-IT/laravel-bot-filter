@@ -27,5 +27,15 @@ return [
             'host' => 'Host: :host',
             'count' => 'Count: :count',
         ],
+        'bot_probe_digest' => [
+            'subject' => 'Bot probes digest',
+            'period' => 'Digest window: :hours hour(s)',
+            'total' => 'Total probes: :count',
+            'pending' => 'Pending: :count',
+            'reviewed' => 'Reviewed: :count',
+            'bots' => 'Bot classified: :count',
+            'normal' => 'Normal classified: :count',
+            'ignored' => 'Ignored: :count',
+        ],
     ],
 ];

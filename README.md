@@ -10,6 +10,8 @@ Laravel 12 core package for recording, classifying, and deduplicating bot and pr
 - emits events when a probe is recorded or reclassified
 - emits an ignored event when a known probe is intentionally filtered out
 - sends a first-alert notification once, then only increments the counter
+- supports context-aware rulesets for environment, host, and panel overrides
+- ships with a digest notification command for scheduled probe summaries
 - lets you customize the default notification subject and intro copy
 - exposes a fluent API for request and exception observation
 - ships a request capture middleware, but you must register it in your application bootstrap

@@ -17,7 +17,11 @@ final class DefaultBotProbeNotifier implements BotProbeNotifierInterface
 
     public function notify(BotProbe $probe): void
     {
-        $settings = $this->settings->settings();
+        $settings = $this->settings->effectiveSettings([
+            'environment' => app()->environment(),
+            'host' => (string) ($probe->host ?? ''),
+            'panel' => (string) ($probe->panel ?? ''),
+        ]);
 
         if (! (bool) $settings->notifications_enabled) {
             return;

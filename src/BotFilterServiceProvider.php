@@ -18,6 +18,7 @@ use Proovit\BotFilter\Support\DefaultBotProbeClassifier;
 use Proovit\BotFilter\Support\DefaultBotProbeFingerprintResolver;
 use Proovit\BotFilter\Support\DefaultBotProbeNotifier;
 use Proovit\BotFilter\Support\DefaultBotProbeRepository;
+use Proovit\BotFilter\Console\Commands\SendBotProbeDigestCommand;
 
 final class BotFilterServiceProvider extends ServiceProvider
 {
@@ -42,6 +43,10 @@ final class BotFilterServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($this->app->runningInConsole()) {
+            $this->commands([
+                SendBotProbeDigestCommand::class,
+            ]);
+
             $this->publishes([
                 __DIR__.'/../config/bot-filter.php' => config_path('bot-filter.php'),
             ], 'bot-filter-config');

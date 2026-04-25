@@ -13,6 +13,13 @@ Important keys:
 - `notification.intro`: optional intro copy displayed before the probe details in the package notification
 - `notification.mail`: first-alert recipient
 - `notification.custom_notification_class`: optional application notification class used in custom mode
+- `rulesets`: optional context-aware overrides for environment, host, and panel
+- `digest.enabled`: enable the periodic digest notification
+- `digest.mail`: digest recipient
+- `digest.title`: custom digest subject
+- `digest.intro`: intro copy displayed before the digest summary
+- `digest.window_hours`: digest lookback window
+- `digest.notify_when_empty`: send an empty digest when the window has no probes
 - `probes`: normalized probe catalog
 
 Capture settings:
@@ -33,3 +40,19 @@ Recommended integration:
 - listen to `Proovit\BotFilter\Events\BotProbeIgnored` if you want to log filtered probes or feed a review queue
 
 Runtime settings are stored in the `bot_filter_settings` table by default and can be managed from the Filament plugin settings page.
+
+### Rulesets
+
+Rulesets allow you to override runtime settings depending on the current environment, host, or panel.
+
+Each ruleset can define:
+
+- `key`
+- `label`
+- `enabled`
+- `environments`
+- `hosts`
+- `panels`
+- `overrides`
+
+The runtime settings page also allows you to force a specific active ruleset with `active_ruleset`.

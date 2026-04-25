@@ -23,6 +23,41 @@ return [
         'custom_notification_class' => env('BOT_FILTER_CUSTOM_NOTIFICATION_CLASS', null),
     ],
 
+    'rulesets' => [
+        [
+            'key' => 'production',
+            'label' => 'Production',
+            'enabled' => false,
+            'environments' => ['production'],
+            'hosts' => ['*.proov-it.online'],
+            'overrides' => [
+                'notifications_enabled' => true,
+                'notification_title' => 'Production bot probe',
+                'notification_intro' => "A production probe was detected.\nPlease review it from the admin cockpit.",
+            ],
+        ],
+        [
+            'key' => 'staging',
+            'label' => 'Staging',
+            'enabled' => false,
+            'environments' => ['staging', 'testing'],
+            'hosts' => ['*.staging.proov-it.online'],
+            'overrides' => [
+                'notifications_enabled' => true,
+                'notification_title' => 'Staging bot probe',
+            ],
+        ],
+    ],
+
+    'digest' => [
+        'enabled' => env('BOT_FILTER_DIGEST_ENABLED', false),
+        'mail' => env('BOT_FILTER_DIGEST_MAIL', env('APP_ADMIN_EMAIL', 'contact@proov-it.io')),
+        'title' => env('BOT_FILTER_DIGEST_TITLE', 'Bot probes digest'),
+        'intro' => env('BOT_FILTER_DIGEST_INTRO', 'Here is the bot probes digest for the selected window.'),
+        'window_hours' => env('BOT_FILTER_DIGEST_WINDOW_HOURS', 24),
+        'notify_when_empty' => env('BOT_FILTER_DIGEST_NOTIFY_WHEN_EMPTY', false),
+    ],
+
     'defaults' => [
         'notify_first_seen' => env('BOT_FILTER_NOTIFY_FIRST_SEEN', true),
         'track_request_headers' => env('BOT_FILTER_TRACK_HEADERS', true),

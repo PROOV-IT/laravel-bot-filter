@@ -27,5 +27,15 @@ return [
             'host' => 'Hôte : :host',
             'count' => 'Compteur : :count',
         ],
+        'bot_probe_digest' => [
+            'subject' => 'Digest des sondes bot',
+            'period' => 'Fenêtre du digest : :hours heure(s)',
+            'total' => 'Sondes totales : :count',
+            'pending' => 'En attente : :count',
+            'reviewed' => 'Révisées : :count',
+            'bots' => 'Classées bot : :count',
+            'normal' => 'Classées normal : :count',
+            'ignored' => 'Ignorées : :count',
+        ],
     ],
 ];

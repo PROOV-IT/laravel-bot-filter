@@ -20,6 +20,13 @@ class BotFilterSetting extends Model
         'ignore_methods' => 'array',
         'ignore_exception_classes' => 'array',
         'notifications_enabled' => 'bool',
+        'active_ruleset' => 'string',
+        'digest_enabled' => 'bool',
+        'digest_mail' => 'string',
+        'digest_title' => 'string',
+        'digest_intro' => 'string',
+        'digest_window_hours' => 'int',
+        'digest_notify_when_empty' => 'bool',
         'show_widgets' => 'bool',
     ];
 

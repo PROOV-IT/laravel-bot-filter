@@ -34,6 +34,16 @@ That is what records:
 
 If you only append it to the `web` group, it may miss true missing-route probes. Global registration is recommended.
 
+### Optional digest
+
+The core package also ships a console command:
+
+```bash
+php artisan bot-filter:digest
+```
+
+It sends a digest notification for the selected window, using the runtime settings in `bot_filter_settings`.
+
 ### Optional capture tuning
 
 After publishing `config/bot-filter.php`, you can fine tune capture with ignore lists:

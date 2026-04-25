@@ -17,7 +17,11 @@ final class DefaultBotProbeCapturePolicy implements BotProbeCapturePolicyInterfa
 
     public function shouldCapture(Request $request, ?Throwable $throwable = null, ?Response $response = null): bool
     {
-        $settings = $this->settings->settings();
+        $settings = $this->settings->effectiveSettings([
+            'environment' => app()->environment(),
+            'host' => $request->getHost(),
+            'panel' => $this->guessPanel($request->path()),
+        ]);
 
         if (! (bool) config('bot-filter.enabled', true) || ! (bool) $settings->capture_enabled) {
             return false;
@@ -28,7 +32,7 @@ final class DefaultBotProbeCapturePolicy implements BotProbeCapturePolicyInterfa
         }
 
         if ($throwable !== null) {
-            return (bool) config('bot-filter.capture.exceptions', true);
+            return (bool) $settings->capture_exceptions;
         }
 
         if ($response === null) {
@@ -37,14 +41,18 @@ final class DefaultBotProbeCapturePolicy implements BotProbeCapturePolicyInterfa
 
         return in_array(
             (int) $response->getStatusCode(),
-            array_map(static fn ($value): int => (int) $value, (array) config('bot-filter.capture.statuses', [404, 405])),
+            array_map(static fn ($value): int => (int) $value, (array) $settings->capture_statuses),
             true
         );
     }
 
     public function ignoreReason(Request $request, ?Throwable $throwable = null, ?Response $response = null): ?string
     {
-        $settings = $this->settings->settings();
+        $settings = $this->settings->effectiveSettings([
+            'environment' => app()->environment(),
+            'host' => $request->getHost(),
+            'panel' => $this->guessPanel($request->path()),
+        ]);
 
         if (! (bool) config('bot-filter.enabled', true) || ! (bool) $settings->capture_enabled) {
             return 'capture_disabled';
