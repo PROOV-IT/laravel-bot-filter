@@ -11,3 +11,9 @@
 - ruleset-aware runtime settings
 - digest notification command
 - notification subject / intro customization from runtime settings
+
+## 0.3.0
+
+- richer digest with top hosts, status/method breakdowns, and recent events
+- retention settings and pruning command
+- hardened settings migrations for fresh installs and incremental upgrades

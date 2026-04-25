@@ -27,6 +27,10 @@ class UrlWatcherSetting extends Model
         'digest_intro' => 'string',
         'digest_window_hours' => 'int',
         'digest_notify_when_empty' => 'bool',
+        'digest_recent_events_limit' => 'int',
+        'retention_enabled' => 'bool',
+        'retention_days' => 'int',
+        'retention_prune_aggregates' => 'bool',
         'show_widgets' => 'bool',
     ];
 

@@ -24,6 +24,10 @@ it('resets URL watcher settings to defaults', function (): void {
         'notification_route' => 'route@example.com',
         'custom_notification_class' => 'App\\Notifications\\Custom',
         'show_widgets' => false,
+        'digest_recent_events_limit' => 5,
+        'retention_enabled' => true,
+        'retention_days' => 14,
+        'retention_prune_aggregates' => true,
     ]);
 
     $settings = $repository->reset();
@@ -42,7 +46,11 @@ it('resets URL watcher settings to defaults', function (): void {
         ->and($settings->notification_intro)->toBeNull()
         ->and($settings->notification_mail)->toBe('contact@proov-it.io')
         ->and($settings->custom_notification_class)->toBeNull()
-        ->and($settings->show_widgets)->toBeTrue();
+        ->and($settings->show_widgets)->toBeTrue()
+        ->and($settings->digest_recent_events_limit)->toBe(10)
+        ->and($settings->retention_enabled)->toBeFalse()
+        ->and($settings->retention_days)->toBe(30)
+        ->and($settings->retention_prune_aggregates)->toBeFalse();
 });
 
 it('applies the matching active ruleset overrides', function (): void {
@@ -59,6 +67,9 @@ it('applies the matching active ruleset overrides', function (): void {
                 'notification_title' => 'Production URL watch',
                 'digest_enabled' => true,
                 'digest_window_hours' => 12,
+                'digest_recent_events_limit' => 4,
+                'retention_enabled' => true,
+                'retention_days' => 21,
                 'capture_statuses' => [403],
             ],
         ],
@@ -84,6 +95,9 @@ it('applies the matching active ruleset overrides', function (): void {
         ->and($effective->notification_title)->toBe('Production URL watch')
         ->and($effective->digest_enabled)->toBeTrue()
         ->and($effective->digest_window_hours)->toBe(12)
+        ->and($effective->digest_recent_events_limit)->toBe(4)
+        ->and($effective->retention_enabled)->toBeTrue()
+        ->and($effective->retention_days)->toBe(21)
         ->and($effective->capture_statuses)->toBe([403]);
 });
 

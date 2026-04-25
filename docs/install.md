@@ -44,6 +44,25 @@ php artisan url-watcher:digest
 
 It sends a digest notification for the selected window, using the runtime settings in `url_watcher_settings`.
 
+The digest now includes:
+
+- top paths
+- top hosts
+- top methods
+- top HTTP statuses
+- a short list of recent events
+
+### Optional retention
+
+The core package also ships a maintenance command:
+
+```bash
+php artisan url-watcher:prune
+```
+
+It deletes old rows from `url_watch_events` according to the retention settings.
+If `retention_prune_aggregates` is enabled, it also removes archived/reviewed aggregate watches that no longer have any remaining events.
+
 ### Optional capture tuning
 
 After publishing `config/url-watcher.php`, you can fine tune capture with ignore lists:
@@ -65,5 +84,9 @@ The core package notification is controlled by the runtime settings row:
 - `notification_title`: optional subject for the package notification
 - `notification_intro`: optional intro copy displayed before the incident details
 - `custom_notification_class`: optional application notification class to use when `notification_mode` is `custom`
+- `digest_recent_events_limit`: number of recent events appended to the digest
+- `retention_enabled`: enable retention
+- `retention_days`: retention threshold in days
+- `retention_prune_aggregates`: also prune empty archived/reviewed aggregate watches
 
 If the custom class cannot be resolved, the package falls back to its built-in notification. When the built-in notification is used, the title and intro copy from the runtime settings are applied before the URL watch details.

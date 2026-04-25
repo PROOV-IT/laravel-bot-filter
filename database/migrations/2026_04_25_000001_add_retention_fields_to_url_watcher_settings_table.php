@@ -15,34 +15,6 @@ return new class extends Migration
         }
 
         Schema::table($tableName, function (Blueprint $table) use ($tableName): void {
-            if (! Schema::hasColumn($tableName, 'active_ruleset')) {
-                $table->string('active_ruleset')->nullable()->after('notification_mode');
-            }
-
-            if (! Schema::hasColumn($tableName, 'digest_enabled')) {
-                $table->boolean('digest_enabled')->default(false)->after('show_widgets');
-            }
-
-            if (! Schema::hasColumn($tableName, 'digest_mail')) {
-                $table->string('digest_mail')->nullable()->after('digest_enabled');
-            }
-
-            if (! Schema::hasColumn($tableName, 'digest_title')) {
-                $table->string('digest_title')->nullable()->after('digest_mail');
-            }
-
-            if (! Schema::hasColumn($tableName, 'digest_intro')) {
-                $table->text('digest_intro')->nullable()->after('digest_title');
-            }
-
-            if (! Schema::hasColumn($tableName, 'digest_window_hours')) {
-                $table->unsignedSmallInteger('digest_window_hours')->default(24)->after('digest_intro');
-            }
-
-            if (! Schema::hasColumn($tableName, 'digest_notify_when_empty')) {
-                $table->boolean('digest_notify_when_empty')->default(false)->after('digest_window_hours');
-            }
-
             if (! Schema::hasColumn($tableName, 'digest_recent_events_limit')) {
                 $table->unsignedSmallInteger('digest_recent_events_limit')->default(10)->after('digest_notify_when_empty');
             }
@@ -71,13 +43,6 @@ return new class extends Migration
 
         Schema::table($tableName, function (Blueprint $table) use ($tableName): void {
             $columns = array_values(array_filter([
-                Schema::hasColumn($tableName, 'active_ruleset') ? 'active_ruleset' : null,
-                Schema::hasColumn($tableName, 'digest_enabled') ? 'digest_enabled' : null,
-                Schema::hasColumn($tableName, 'digest_mail') ? 'digest_mail' : null,
-                Schema::hasColumn($tableName, 'digest_title') ? 'digest_title' : null,
-                Schema::hasColumn($tableName, 'digest_intro') ? 'digest_intro' : null,
-                Schema::hasColumn($tableName, 'digest_window_hours') ? 'digest_window_hours' : null,
-                Schema::hasColumn($tableName, 'digest_notify_when_empty') ? 'digest_notify_when_empty' : null,
                 Schema::hasColumn($tableName, 'digest_recent_events_limit') ? 'digest_recent_events_limit' : null,
                 Schema::hasColumn($tableName, 'retention_enabled') ? 'retention_enabled' : null,
                 Schema::hasColumn($tableName, 'retention_days') ? 'retention_days' : null,

@@ -57,6 +57,13 @@ return [
         'intro' => env('URL_WATCHER_DIGEST_INTRO', 'Here is the URL watcher digest for the selected window.'),
         'window_hours' => env('URL_WATCHER_DIGEST_WINDOW_HOURS', 24),
         'notify_when_empty' => env('URL_WATCHER_DIGEST_NOTIFY_WHEN_EMPTY', false),
+        'recent_events_limit' => env('URL_WATCHER_DIGEST_RECENT_EVENTS_LIMIT', 10),
+    ],
+
+    'retention' => [
+        'enabled' => env('URL_WATCHER_RETENTION_ENABLED', false),
+        'days' => env('URL_WATCHER_RETENTION_DAYS', 30),
+        'prune_aggregates' => env('URL_WATCHER_RETENTION_PRUNE_AGGREGATES', false),
     ],
 
     'defaults' => [

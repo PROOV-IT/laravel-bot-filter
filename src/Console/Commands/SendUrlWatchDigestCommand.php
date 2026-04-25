@@ -10,6 +10,7 @@ use Proovit\UrlWatcher\Contracts\UrlWatcherSettingsRepositoryInterface;
 use Proovit\UrlWatcher\Enums\UrlWatchClassification;
 use Proovit\UrlWatcher\Enums\UrlWatchStatus;
 use Proovit\UrlWatcher\Models\UrlWatch;
+use Proovit\UrlWatcher\Models\UrlWatchEvent;
 use Proovit\UrlWatcher\Notifications\UrlWatchDigestNotification;
 
 final class SendUrlWatchDigestCommand extends Command
@@ -30,12 +31,15 @@ final class SendUrlWatchDigestCommand extends Command
 
         $windowHours = max(1, (int) ($this->option('hours') ?: $settings->digest_window_hours ?: 24));
         $since = now()->subHours($windowHours);
+        $recentEventsLimit = max(1, (int) ($settings->digest_recent_events_limit ?: 10));
 
         $query = UrlWatch::query()->where('last_seen_at', '>=', $since);
+        $eventsQuery = UrlWatchEvent::query()->where('occurred_at', '>=', $since);
 
         $summary = [
             'window_hours' => $windowHours,
             'total' => (clone $query)->count(),
+            'events_total' => (clone $eventsQuery)->count(),
             'pending' => (clone $query)->where('status', UrlWatchStatus::Pending->value)->count(),
             'reviewed' => (clone $query)->where('status', UrlWatchStatus::Reviewed->value)->count(),
             'archived' => (clone $query)->where('status', UrlWatchStatus::Archived->value)->count(),
@@ -63,6 +67,44 @@ final class SendUrlWatchDigestCommand extends Command
                     'label' => (string) $watch->getAttribute('label'),
                     'count' => (int) $watch->getAttribute('count'),
                 ])
+                ->all(),
+            'top_methods' => (clone $eventsQuery)
+                ->selectRaw('COALESCE(NULLIF(method, \'\'), \'-\') as label, COUNT(*) as count')
+                ->groupByRaw('COALESCE(NULLIF(method, \'\'), \'-\')')
+                ->orderByDesc('count')
+                ->limit(5)
+                ->get()
+                ->map(static fn (UrlWatchEvent $event): array => [
+                    'label' => (string) $event->getAttribute('label'),
+                    'count' => (int) $event->getAttribute('count'),
+                ])
+                ->all(),
+            'top_statuses' => (clone $eventsQuery)
+                ->selectRaw('COALESCE(CAST(status_code as CHAR), \'-\') as label, COUNT(*) as count')
+                ->groupByRaw('COALESCE(CAST(status_code as CHAR), \'-\')')
+                ->orderByDesc('count')
+                ->limit(5)
+                ->get()
+                ->map(static fn (UrlWatchEvent $event): array => [
+                    'label' => (string) $event->getAttribute('label'),
+                    'count' => (int) $event->getAttribute('count'),
+                ])
+                ->all(),
+            'recent_events' => (clone $eventsQuery)
+                ->with('urlWatch')
+                ->latest('occurred_at')
+                ->limit($recentEventsLimit)
+                ->get()
+                ->map(static function (UrlWatchEvent $event): array {
+                    return [
+                        'occurred_at' => optional($event->occurred_at)->toDateTimeString(),
+                        'method' => (string) ($event->method ?? '-'),
+                        'host' => (string) ($event->host ?? '-'),
+                        'path' => (string) ($event->normalized_path ?: $event->path ?: '/'),
+                        'status_code' => (string) ($event->status_code ?? '-'),
+                        'panel' => (string) ($event->panel ?? '-'),
+                    ];
+                })
                 ->all(),
         ];
 

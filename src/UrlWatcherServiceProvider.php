@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Proovit\UrlWatcher;
 
 use Illuminate\Support\ServiceProvider;
+use Proovit\UrlWatcher\Console\Commands\PruneUrlWatchHistoryCommand;
 use Proovit\UrlWatcher\Console\Commands\SendUrlWatchDigestCommand;
 use Proovit\UrlWatcher\Contracts\UrlWatchCapturePolicyInterface;
 use Proovit\UrlWatcher\Contracts\UrlWatchClassifierInterface;
@@ -45,6 +46,7 @@ final class UrlWatcherServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 SendUrlWatchDigestCommand::class,
+                PruneUrlWatchHistoryCommand::class,
             ]);
 
             $this->publishes([

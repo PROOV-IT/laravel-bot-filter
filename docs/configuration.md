@@ -20,6 +20,10 @@ Important keys:
 - `digest.intro`: intro copy displayed before the digest summary
 - `digest.window_hours`: digest lookback window
 - `digest.notify_when_empty`: send an empty digest when the window has no incidents
+- `digest.recent_events_limit`: number of recent events included in the digest
+- `retention.enabled`: enable the retention workflow
+- `retention.days`: keep events for this many days before pruning
+- `retention.prune_aggregates`: also delete archived/reviewed aggregates with no remaining events
 - `definitions`: normalized URL definition catalog
 - `history.enabled`: enable detailed event history storage
 - `history.store_user_agent`: keep the user agent on event rows

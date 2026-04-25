@@ -98,6 +98,10 @@ final class DefaultUrlWatcherSettingsRepository implements UrlWatcherSettingsRep
             'digest_intro' => filled(config('url-watcher.digest.intro')) ? (string) config('url-watcher.digest.intro') : null,
             'digest_window_hours' => (int) config('url-watcher.digest.window_hours', 24),
             'digest_notify_when_empty' => (bool) config('url-watcher.digest.notify_when_empty', false),
+            'digest_recent_events_limit' => (int) config('url-watcher.digest.recent_events_limit', 10),
+            'retention_enabled' => (bool) config('url-watcher.retention.enabled', false),
+            'retention_days' => (int) config('url-watcher.retention.days', 30),
+            'retention_prune_aggregates' => (bool) config('url-watcher.retention.prune_aggregates', false),
         ];
     }
 
@@ -181,6 +185,10 @@ final class DefaultUrlWatcherSettingsRepository implements UrlWatcherSettingsRep
             'digest_intro',
             'digest_window_hours',
             'digest_notify_when_empty',
+            'digest_recent_events_limit',
+            'retention_enabled',
+            'retention_days',
+            'retention_prune_aggregates',
         ] as $attribute) {
             if (! array_key_exists($attribute, $overrides)) {
                 continue;
