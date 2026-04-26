@@ -12,13 +12,15 @@ use Proovit\UrlWatcher\Models\UrlWatchEvent;
 
 final class PruneUrlWatchHistoryCommand extends Command
 {
-    protected $signature = 'url-watcher:prune {--days= : Override the retention window in days} {--with-aggregates : Also prune archived aggregate watches with no remaining events}';
+    protected $signature = 'url-watcher:prune {--days= : Override the retention window in days} {--ruleset= : Force a specific configured ruleset key} {--with-aggregates : Also prune archived aggregate watches with no remaining events}';
 
     protected $description = 'Prune old URL watcher history events and optional archived aggregate records.';
 
     public function handle(UrlWatcherSettingsRepositoryInterface $settingsRepository): int
     {
-        $settings = $settingsRepository->effectiveSettings();
+        $settings = $settingsRepository->effectiveSettings([
+            'ruleset' => $this->option('ruleset'),
+        ]);
 
         if (! (bool) $settings->retention_enabled && ! filled($this->option('days'))) {
             $this->info('URL watcher retention is disabled.');

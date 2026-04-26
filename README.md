@@ -33,3 +33,18 @@ composer require proovit/laravel-url-watcher
 - [Definition catalog](docs/probes.md)
 - [Events](docs/events.md)
 - [Release notes](docs/release-notes.md)
+
+## Scheduling
+
+Typical host-app scheduling in `routes/console.php`:
+
+```php
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('url-watcher:digest')->hourly();
+Schedule::command('url-watcher:prune')->dailyAt('02:00');
+```
+
+The digest and retention commands read their runtime settings from `url_watcher_settings`, so the host app can keep the schedule static and tune behavior from configuration or the Filament plugin.
+
+Both commands also accept `--ruleset=<key>` when the host app wants different scheduling policies per environment or surface.

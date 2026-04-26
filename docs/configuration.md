@@ -64,3 +64,5 @@ Each ruleset can define:
 - `overrides`
 
 The runtime settings page also allows you to force a specific active ruleset with `active_ruleset`.
+
+For automation, the digest and prune commands also accept `--ruleset=<key>`. That is the recommended way to run multiple schedules against different policies without duplicating runtime settings rows.

@@ -17,3 +17,8 @@
 - richer digest with top hosts, status/method breakdowns, and recent events
 - retention settings and pruning command
 - hardened settings migrations for fresh installs and incremental upgrades
+
+## 0.3.1
+
+- ruleset-forced digest and prune commands via `--ruleset`
+- anomaly-oriented digest metrics such as event delta, unique hosts, write attempts, and host spikes

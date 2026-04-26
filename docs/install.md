@@ -43,6 +43,7 @@ php artisan url-watcher:digest
 ```
 
 It sends a digest notification for the selected window, using the runtime settings in `url_watcher_settings`.
+You can also force a configured ruleset with `--ruleset=<key>`.
 
 The digest now includes:
 
@@ -51,6 +52,20 @@ The digest now includes:
 - top methods
 - top HTTP statuses
 - a short list of recent events
+- event delta versus the previous window
+- unique hosts
+- write attempts
+- new watches and newly seen paths
+- the largest host spike detected across the current window
+
+Recommended scheduling:
+
+```php
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('url-watcher:digest')->hourly();
+Schedule::command('url-watcher:digest --ruleset=production')->hourlyAt(10);
+```
 
 ### Optional retention
 
@@ -62,6 +77,16 @@ php artisan url-watcher:prune
 
 It deletes old rows from `url_watch_events` according to the retention settings.
 If `retention_prune_aggregates` is enabled, it also removes archived/reviewed aggregate watches that no longer have any remaining events.
+You can also force a configured ruleset with `--ruleset=<key>`.
+
+Recommended scheduling:
+
+```php
+use Illuminate\Support\Facades\Schedule;
+
+Schedule::command('url-watcher:prune')->dailyAt('02:00');
+Schedule::command('url-watcher:prune --ruleset=staging')->dailyAt('03:00');
+```
 
 ### Optional capture tuning
 

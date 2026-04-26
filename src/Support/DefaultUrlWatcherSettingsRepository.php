@@ -113,6 +113,16 @@ final class DefaultUrlWatcherSettingsRepository implements UrlWatcherSettingsRep
             return null;
         }
 
+        $forcedRuleset = trim((string) ($context['ruleset'] ?? ''));
+
+        if ($forcedRuleset !== '') {
+            foreach ($rulesets as $ruleset) {
+                if (($ruleset['key'] ?? null) === $forcedRuleset && (bool) ($ruleset['enabled'] ?? true)) {
+                    return $ruleset;
+                }
+            }
+        }
+
         $activeRuleset = trim((string) ($settings->active_ruleset ?? ''));
 
         if ($activeRuleset !== '') {

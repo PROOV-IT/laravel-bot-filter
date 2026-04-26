@@ -39,11 +39,26 @@ final class UrlWatchDigestNotification extends Notification
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.period', ['hours' => (string) ($this->summary['window_hours'] ?? 24)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.total', ['count' => (string) ($this->summary['total'] ?? 0)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.events_total', ['count' => (string) ($this->summary['events_total'] ?? 0)]))
+            ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.events_delta', ['count' => (string) ($this->summary['events_delta'] ?? 0), 'previous' => (string) ($this->summary['previous_events_total'] ?? 0)]))
+            ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.unique_hosts', ['count' => (string) ($this->summary['unique_hosts'] ?? 0)]))
+            ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.new_watches', ['count' => (string) ($this->summary['new_watches'] ?? 0)]))
+            ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.write_attempts', ['count' => (string) ($this->summary['write_attempts'] ?? 0)]))
+            ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.client_errors', ['count' => (string) ($this->summary['client_errors'] ?? 0)]))
+            ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.server_errors', ['count' => (string) ($this->summary['server_errors'] ?? 0)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.pending', ['count' => (string) ($this->summary['pending'] ?? 0)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.reviewed', ['count' => (string) ($this->summary['reviewed'] ?? 0)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.bots', ['count' => (string) ($this->summary['bots'] ?? 0)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.normal', ['count' => (string) ($this->summary['normal'] ?? 0)]))
             ->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.ignored', ['count' => (string) ($this->summary['ignored'] ?? 0)]));
+
+        if (filled($this->summary['largest_host_spike']['label'] ?? null)) {
+            $message->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.largest_host_spike', [
+                'label' => (string) ($this->summary['largest_host_spike']['label'] ?? '-'),
+                'current' => (string) ($this->summary['largest_host_spike']['current'] ?? 0),
+                'previous' => (string) ($this->summary['largest_host_spike']['previous'] ?? 0),
+                'delta' => (string) ($this->summary['largest_host_spike']['delta'] ?? 0),
+            ]));
+        }
 
         $this->addRows(
             $message,
@@ -68,6 +83,18 @@ final class UrlWatchDigestNotification extends Notification
             __('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.top_statuses_heading'),
             (array) ($this->summary['top_statuses'] ?? []),
         );
+
+        $newPaths = (array) ($this->summary['new_paths'] ?? []);
+
+        if ($newPaths !== []) {
+            $message->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.new_paths_heading'));
+
+            foreach ($newPaths as $row) {
+                $message->line(__('laravel-url-watcher::laravel-url-watcher.notifications.url_watch_digest.new_path', [
+                    'label' => (string) ($row['label'] ?? '-'),
+                ]));
+            }
+        }
 
         $recentEvents = (array) ($this->summary['recent_events'] ?? []);
 
