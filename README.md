@@ -34,6 +34,12 @@ composer require proovit/laravel-url-watcher
 - [Events](docs/events.md)
 - [Release notes](docs/release-notes.md)
 
+## Release notes
+
+### 0.3.4
+
+- Added ruleset-aware anomaly digest reporting and hardened runtime behavior for the latest URL watcher workflows
+
 ## Scheduling
 
 Typical host-app scheduling in `routes/console.php`:

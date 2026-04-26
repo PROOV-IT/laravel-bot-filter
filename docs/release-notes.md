@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.3.4
+
+- Added ruleset-aware anomaly digest reporting and hardened runtime behavior for the latest URL watcher workflows
+
 ## 0.1.0
 
 - initial core scaffolding
